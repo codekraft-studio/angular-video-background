@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AngularJs Video Background - codekraft studio</title>
+    <meta name="author" content="codekraft-studio">
+    <meta name="description" content="Expect us, we are coming, the new full qualified web developers duo.">
+  	<meta name="Robots" content="ALL,INDEX">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:title" content="codekraft-studio, cutting edge programming!" />
+  	<meta property="og:description" content="Expect us, we are coming, the new full qualified web developers duo" />
+  	<meta property="og:image" content="http://core.codekraft.it/www.codekraft.it/quadkode.jpg" />
+  	<meta property="og:type" content="website" />
+  	<meta property="og:url" content="http://www.codekraft.it/" />
+  	<meta property="og:site_name" content="codekraft-studio, cutting edge programming!" />
+    <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="../src/video-background.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body ng-controller="mainCtrl">
+
+    <video-background class="bg-video" autoplay="false" key-controls="true"
+      on-firstplay="isStarted = true" on-firstend="isStarted = false; isEnded = true"
+      source="myVideo">
+    </video-background>
+
+    <article role="main" class="center-block" ng-class="{'hide': isStarted}">
+      <a href="https://github.com/codekraft-studio"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+      <header>
+        <div class="hcont">
+          <h1>angular-video-background</h1>
+          <h2>use any video as background with many options</h2>
+          <p>
+            You can show any video you want inside your page and have fun with keyboard controls!
+            <br>Press <b>space</b> to start the video.
+          </p>
+          <a ng-show="isEnded" ng-cloak href="https://github.com/codekraft-studio/angular-video-background/archive/master.zip" class="a-btn">Get it</a>
+          <a ng-show="isEnded" ng-cloak href="https://github.com/codekraft-studio/angular-video-background" class="a-btn">Docs</a>
+        </div>
+      </header>
+    </article>
+  </body>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="../src/video-background.module.js"></script>
+  <script>
+    angular.element(document).ready(function() {
+      angular.bootstrap(document, ['app'])
+    })
+  </script>
+</html>
