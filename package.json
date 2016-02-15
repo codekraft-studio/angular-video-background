@@ -1,6 +1,6 @@
 {
   "name": "angular-video-background",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "use any video as background for your html pages with many options",
   "main": "index.js",
   "directories": {
