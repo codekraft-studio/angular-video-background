@@ -35,15 +35,24 @@
             <br>Press <b>space</b> to start the video.
           </p>
           <a ng-show="isEnded" ng-cloak href="https://github.com/codekraft-studio/angular-video-background/archive/master.zip" class="a-btn">Get it</a>
-          <a ng-show="isEnded" ng-cloak href="https://github.com/codekraft-studio/angular-video-background" class="a-btn">Docs</a>
+          <a ng-show="isEnded" ng-cloak href="https://github.com/codekraft-studio/angular-video-background/blob/master/README.md" class="a-btn">Docs</a>
         </div>
       </header>
     </article>
   </body>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
-  <script type="text/javascript" src="app.js"></script>
   <script type="text/javascript" src="../src/video-background.module.js"></script>
   <script>
+    angular.module('app', ['video-background'])
+
+    .controller('mainCtrl', function($scope) {
+
+      $scope.myVideo = {
+        mp4: 'http://www.free-video-footage.com//static2/preview/stock-video-free-stock-video-002-83568.mp4'
+      }
+
+    })
+
     angular.element(document).ready(function() {
       angular.bootstrap(document, ['app'])
     })
