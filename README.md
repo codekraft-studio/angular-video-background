@@ -46,6 +46,34 @@ __Note:__ you should pass a object to the attribute.
 * __autoplay__: set the video auto play attribute (default true)
 * __on-firstplay__: a callback to run when the video play for the first time
 * __on-firstend__: a callback to run when the video ends for the first time
+* __start-time__: specify a custom start time for the video (expressed in int/float es: 1.50)
+* __end-time__: specify a custom end time for the video (expressed in int/float es: 17.25)
 
+---
 
-Coming soon many customization examples..
+## Examples:
+
+### source
+The object containing the source/s of the video to show. __This attribute is necessary for the directive to work.__
+```html
+<video-background source="{
+  mp4: 'mySource.mp4',
+  ogg: 'mySource.ogg',
+  webm: 'mySource.webm'
+}"></video-background>
+```
+
+### auto-play
+The autoplay attribute will start the video when it's ready to play. (like the normal html autoplay attribute)
+
+### start-time
+Specify a custom start time for the video, pass a number, can be a float.
+```html
+<video-background source="myVideo" start-time="3.75"></video-background>
+```
+
+### end-time
+Specify a custom end time for the video, pass a number, can be a float.
+```html
+<video-background source="myVideo" end-time="15.35"></video-background>
+```
