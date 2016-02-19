@@ -30,8 +30,8 @@ The directive most important attribute that must be specified in order to work c
 ```javascript
 // example source object
 myVideo = {
-  mp4: public/myvideo.mp4,
-  ogg: public/myvideo.ogg
+  mp4: "public/myvideo.mp4",
+  ogg: "public/myvideo.ogg"
 }
 ```
 __Note:__ you should pass a object to the attribute.
