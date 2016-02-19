@@ -1,5 +1,16 @@
 angular.module('video-background', [])
 
+.run(function($templateCache) {
+
+  var tmpl = '<video></video>' +
+                '<div class="video-controls">' +
+                  '<span ng-bind="currentTime | number: 2"></span>' +
+                '</div>' +
+              '</div>';
+
+  $templateCache.put('angular-video-background/main.html', tmpl);
+})
+
 .directive('videoBackground', function($log,$timeout,$document) {
 
   var _scope = {
@@ -10,14 +21,8 @@ angular.module('video-background', [])
 
   var directive = {
     restrict: 'E',
-    replace: true,
     scope: _scope,
-    template: '<div>' +
-                '<video></video>' +
-                '<div class="video-controls">' +
-                  '<span ng-bind="currentTime | number: 2"></span>' +
-                '</div>' +
-              '</div>',
+    templateUrl: 'angular-video-background/main.html',
     link: _link
   }
 
@@ -30,8 +35,6 @@ angular.module('video-background', [])
       $log.warn('VideoBg: Expected a valid object, received:', scope.source);
       return;
     }
-
-    var firstPlay = true, firstEnd = true;
 
     // allowed source types
     var sourceTypes = ['mp4', 'webm', 'ogg'];
@@ -48,14 +51,19 @@ angular.module('video-background', [])
     // the video controls box
     var controlBoxTimeout;
 
+    // init custom flags
+    $video.firstPlay = true;
+    $video.firstEnd = true;
+
     // hide video element by default
     videoEl.addClass('ng-hide');
-    // add custom class
-    videoEl.addClass('video-background');
-
+    // hide control box by default
     controlBox.addClass('ng-hide');
 
-    // add source elements
+    // add directive class
+    videoEl.addClass('video-background');
+
+    // add source elements to html5 video
     for( var key in scope.source ) {
       // if property name is allowed
       // create source element
@@ -124,8 +132,8 @@ angular.module('video-background', [])
      */
     $video.onended = function() {
 
-      if( firstEnd ) {
-        firstEnd = false;
+      if( $video.firstEnd ) {
+        $video.firstEnd = false;
         // run the callback if specified
         return angular.isFunction(scope.onFirstend) ? scope.$apply(scope.onFirstend()) : true;
       }
@@ -137,6 +145,8 @@ angular.module('video-background', [])
      */
     $video.onloadeddata = function() {
 
+      // set starting time
+      $video.currentTime = attrs.startTime ? attrs.startTime : $video.currentTime;
       // init video time
       scope.currentTime = $video.currentTime;
 
@@ -157,7 +167,6 @@ angular.module('video-background', [])
 
       // remove hide class once the video is ready
       videoEl.removeClass('ng-hide');
-
       // if autoplay is set and is not false
       if( typeof attrs.autoplay !== 'undefined' && attrs.autoplay !== "false" ) {
         // start the video
@@ -170,9 +179,16 @@ angular.module('video-background', [])
      * Update scope time variable
      */
     $video.ontimeupdate = function() {
+
+      if( attrs.endTime && attrs.endTime <= $video.currentTime ) {
+        scope.currentTime = attrs.endTime;
+        return $video.currentTime = $video.duration;
+      }
+
       scope.$apply(function() {
         return scope.currentTime = $video.currentTime;
       })
+
     }
 
     /**
@@ -180,9 +196,9 @@ angular.module('video-background', [])
      */
     $video.onplay = function() {
 
-      if( firstPlay ) {
+      if( $video.firstPlay ) {
         // set flag
-        firstPlay = false;
+        $video.firstPlay = false;
         // run the callback if specified
         return angular.isFunction(scope.onFirstplay) ? scope.$apply(scope.onFirstplay()) : true;
       }
