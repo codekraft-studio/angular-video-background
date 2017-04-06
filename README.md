@@ -12,11 +12,16 @@ npm install angular-video-background
 ```
 or clone it from github.
 
-
-Add the script to your html page.
+Add the style to your header:
 ```html
-<script type="text/javascript" src="video-background.module.js"></script>
+<link rel="stylesheet" href="angular-video-background.min.css">
 ```
+
+Add the script to your body:
+```html
+<script type="text/javascript" src="angular-video-background.min.js"></script>
+```
+
 and than add the module to your application dependencies:
 ```javascript
 angular.module('app', ['video-background'])
@@ -29,14 +34,15 @@ and you can start to use the directive __video-background__ it in your applicati
 The directive most important attribute that must be specified in order to work correctly. The attribute is __source__, that specify the object with the source/s of the video in the format __type__: "source".
 ```javascript
 // example source object
-myVideo = {
+$scope.myVideo = {
   mp4: "public/myvideo.mp4",
   ogg: "public/myvideo.ogg"
 }
 ```
-__Note:__ you should pass a object to the attribute.
+__Note:__ you must pass a object to the attribute.
 ```html
 <video-background source="myVideo"></video-background>
+<video-background source="{ mp4: 'path/to/video.mp4' }"></video-background>
 ```
 
 ---
@@ -44,6 +50,7 @@ __Note:__ you should pass a object to the attribute.
 ## Directive attributes:
 * __source__: the object containing the video source/s
 * __autoplay__: set the video auto play attribute (default true)
+* __autopause__: autopause the video in case of seeking
 * __on-firstplay__: a callback to run when the video play for the first time
 * __on-firstend__: a callback to run when the video ends for the first time
 * __start-time__: specify a custom start time for the video (expressed in int/float es: 1.50)
@@ -76,4 +83,10 @@ Specify a custom start time for the video, pass a number, can be a float.
 Specify a custom end time for the video, pass a number, can be a float.
 ```html
 <video-background source="myVideo" end-time="15.35"></video-background>
+```
+
+### autoplay & autopause
+Specify a custom end time for the video, pass a number, can be a float.
+```html
+<video-background source="myVideo" key-controls="true" autoplay autopause></video-background>
 ```
