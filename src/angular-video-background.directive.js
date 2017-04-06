@@ -1,32 +1,6 @@
-angular.module('video-background', [])
-
-.run(function($templateCache) {
-
-  var tmpl = '<video></video>' +
-                '<div class="video-controls">' +
-                  '<span ng-bind="currentTime | number: 2"></span>' +
-                '</div>' +
-              '</div>';
-
-  $templateCache.put('angular-video-background/main.html', tmpl);
-})
+angular.module('video-background')
 
 .directive('videoBackground', function($log,$timeout,$document) {
-
-  var _scope = {
-    source: '=',
-    onFirstplay: '&',
-    onFirstend: '&'
-  }
-
-  var directive = {
-    restrict: 'E',
-    scope: _scope,
-    templateUrl: 'angular-video-background/main.html',
-    link: _link
-  }
-
-  return directive;
 
   function _link(scope, elem, attrs) {
 
@@ -54,9 +28,14 @@ angular.module('video-background', [])
     // init custom flags
     $video.firstPlay = true;
     $video.firstEnd = true;
+    $video.autopause = ( typeof attrs.autopause !== 'undefined' && attrs.autopause !== "false" );
+    $video.loop = ( typeof attrs.loop !== 'undefined' && attrs.loop !== "false" );
+    $video.volume = ( attrs.volume && ( 0 <= attrs.volume && attrs.volume <= 1 ) ) ? attrs.volume : 1;
+    $video.defaultPlaybackRate = ( attrs.playbackRate ) ? attrs.playbackRate : 1;
 
     // hide video element by default
     videoEl.addClass('ng-hide');
+
     // hide control box by default
     controlBox.addClass('ng-hide');
 
@@ -82,47 +61,63 @@ angular.module('video-background', [])
 
     }
 
-    // set the volume
-    $video.volume = ( attrs.volume && ( 0 <= attrs.volume && attrs.volume <= 1 ) ) ? attrs.volume : 1;
-
-    // set playback rate
-    $video.defaultPlaybackRate = ( attrs.playbackRate ) ? attrs.playbackRate : 1;
-
-    // set loop attribute
-    $video.loop = ( typeof attrs.loop !== 'undefined' && attrs.loop !== "false" ) ? true : false;
-
     // key bindings
     function onKeyUp(e) {
 
-      // if esc key reset the video
-      if( e.which == 27 ) {
-        // stop the video and reload it
+      // if esc key stop and reset the video
+      if( e.which === 27 ) {
         $video.pause();
         $video.currentTime = 0;
       }
 
       // if space bar and video is not ended
-      if( e.which == 32 && !$video.endend ) {
+      if( e.which === 32 && !$video.endend ) {
         // toggle video state
-        $video.paused ? $video.play() : $video.pause();
+        if( $video.paused ) {
+          $video.play();
+        } else {
+          $video.pause();
+        }
       }
 
+    }
+
+    function keySeek(e) {
+
       // left arrow key
-      if( e.which == 37 ) {
+      if( e.which === 37 ) {
         e.preventDefault();
-        // if is not at the very start
-        if($video.currentTime > 0 && $video.currentTime >= 2) {
-          $video.currentTime -= 2;
+
+        // Auto pause the video
+        if( !$video.paused && $video.autopause ) {
+          $video.pause();
         }
+
+        // if is not at the very start
+        if($video.currentTime > 0 && $video.currentTime >= 2 ) {
+          $video.currentTime -= 2;
+        } else {
+          $video.currentTime = 0;
+        }
+
       }
 
       // ight arrow key
-      if( e.which == 39 ) {
+      if( e.which === 39 ) {
         e.preventDefault();
+
+        // Auto pause the video
+        if( !$video.paused && $video.autopause ) {
+          $video.pause();
+        }
+
         // if is not at the very bottom
         if($video.currentTime < $video.duration) {
           $video.currentTime += 2;
+        } else {
+          $video.currentTime = $video.duration;
         }
+
       }
 
     }
@@ -133,20 +128,22 @@ angular.module('video-background', [])
     $video.onended = function() {
 
       if( $video.firstEnd ) {
+        // Turn off the flag
         $video.firstEnd = false;
         // run the callback if specified
         return angular.isFunction(scope.onFirstend) ? scope.$apply(scope.onFirstend()) : true;
       }
 
-    }
+    };
 
     /**
      * When video data is loaded
      */
     $video.onloadeddata = function() {
 
-      // set starting time
-      $video.currentTime = attrs.startTime ? attrs.startTime : $video.currentTime;
+      // set starting time from attribute or zero
+      $video.currentTime = attrs.startTime ? attrs.startTime : 0;
+
       // init video time
       scope.currentTime = $video.currentTime;
 
@@ -154,26 +151,27 @@ angular.module('video-background', [])
       if( typeof attrs.keyControls !== 'undefined' && attrs.keyControls !== "false"  ) {
 
         // add some key bindings
-        $document.on('keydown', onKeyUp);
+        $document.on('keydown', keySeek);
+        $document.on('keyup', onKeyUp);
 
-        // on destroy remove any event handler
-        // or scope watcher
-        scope.$on('$destroy', function(e) {
-          // remove document keypress handler
-          $document.off('keypress', onKeyUp);
-        })
+        // on destroy remove any event handler or watch
+        scope.$on('$destroy', function() {
+          $document.off('keydown', keySeek);
+          $document.off('keyup', onKeyUp);
+        });
 
       }
 
       // remove hide class once the video is ready
       videoEl.removeClass('ng-hide');
+
       // if autoplay is set and is not false
       if( typeof attrs.autoplay !== 'undefined' && attrs.autoplay !== "false" ) {
         // start the video
         return $video.play();
       }
 
-    }
+    };
 
     /**
      * Update scope time variable
@@ -187,9 +185,9 @@ angular.module('video-background', [])
 
       scope.$apply(function() {
         return scope.currentTime = $video.currentTime;
-      })
+      });
 
-    }
+    };
 
     /**
      * Catch the first play
@@ -202,56 +200,83 @@ angular.module('video-background', [])
         // run the callback if specified
         return angular.isFunction(scope.onFirstplay) ? scope.$apply(scope.onFirstplay()) : true;
       }
-    }
+
+    };
 
     // by default show the control box
     // if not specified
-    if( attrs.controlBox != 'false' ) {
+    if( attrs.controlBox !== 'false' ) {
 
       /**
       * When the user start seeking
       * show the control box
       */
       $video.onseeking = function() {
+
         // show controls box
         scope.$apply(function() {
           return controlBox.removeClass('ng-hide');
-        })
-      }
+        });
+
+      };
 
       /**
       * When the seek is finished
       * hide again the control box
       */
       $video.onseeked = function() {
+
         // cancel privous timeout
         $timeout.cancel(controlBoxTimeout);
         // hide the control box
         controlBoxTimeout = $timeout(function() {
+
           scope.$apply(function() {
             controlBox.addClass('ng-hide');
-          })
-        }, 2000)
-      }
+          });
+
+        }, 2000);
+
+      };
 
       /**
       * Show the video controls box
       */
       $video.onpause = function() {
+
         // cancel privous timeout
         $timeout.cancel(controlBoxTimeout);
         // show element for a while
         controlBox.removeClass('ng-hide');
+
         controlBoxTimeout = $timeout(function() {
+
           // hide the control box
           scope.$apply(function() {
             controlBox.addClass('ng-hide');
-          })
-        }, 2000)
-      }
+          });
+
+        }, 2000);
+
+      };
 
     }
 
   }
 
-})
+  var _scope = {
+    source: '=',
+    onFirstplay: '&',
+    onFirstend: '&'
+  };
+
+  var directive = {
+    restrict: 'E',
+    scope: _scope,
+    templateUrl: 'angular-video-background/main.html',
+    link: _link
+  };
+
+  return directive;
+
+});

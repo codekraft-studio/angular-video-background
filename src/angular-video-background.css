@@ -1,15 +1,23 @@
-.video-background{
-  position: fixed;
-  top: 50%;
-  left: 50%;
+video-background {
+  overflow: hidden
+}
+
+.video-background, video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0
+}
+
+.video-background {
   min-width: 100%;
   min-height: 100%;
   width: auto;
   height: auto;
   z-index: -100;
-  transform: translateX(-50%) translateY(-50%);
   background-size: cover;
-  transition: 1s opacity;
+  transition: opacity 1s
 }
 
 .video-controls {
@@ -19,16 +27,16 @@
   height: 50px;
   bottom: 0;
   right: 0;
-  margin:  0 auto;
-  left:  0;
+  margin: 0 auto;
+  left: 0;
   text-align: center;
   padding-bottom: 20px;
-  transition: 15ms;
+  transition: 15ms
 }
 
 .video-controls span {
   font-size: 2.8em;
-  color: whitesmoke;
+  color: #f5f5f5;
   font-family: sans-serif;
-  font-weight: 600;
+  font-weight: 600
 }
