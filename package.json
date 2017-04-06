@@ -3,9 +3,6 @@
   "version": "1.0.1",
   "description": "use any video as background for your html pages with many options",
   "main": "index.js",
-  "directories": {
-    "example": "example"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,9 +12,9 @@
   },
   "keywords": [
     "angularjs",
-    "video-background",
     "video",
     "video-player",
+    "video-background",
     "html5",
     "media-player"
   ],
@@ -26,5 +23,17 @@
   "bugs": {
     "url": "https://github.com/codekraft-studio/angular-video-background/issues"
   },
-  "homepage": "https://github.com/codekraft-studio/angular-video-background#readme"
+  "homepage": "https://github.com/codekraft-studio/angular-video-background#readme",
+  "devDependencies": {
+    "autoprefixer": "^6.7.7",
+    "cssnano": "^3.10.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "^2.3.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-newer": "^1.2.0",
+    "grunt-ng-annotate": "^3.0.0",
+    "grunt-postcss": "^0.8.0"
+  }
 }
