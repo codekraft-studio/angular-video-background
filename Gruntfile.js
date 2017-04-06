@@ -97,7 +97,7 @@ module.exports = function(grunt) {
       },
       styles: {
         files: 'src/<%= pkg.name %>.css',
-        tasks: ['newer:postcss']
+        tasks: ['postcss']
       },
       source: {
         files: 'src/**/*.js',
@@ -128,5 +128,8 @@ module.exports = function(grunt) {
 
   // Default task.
   grunt.registerTask('default', ['watch']);
+
+  // Build task(s)
+  grunt.registerTask('build', ['newer:jshint', 'concat', 'ngAnnotate', 'uglify', 'postcss']);
 
 };
