@@ -15,16 +15,21 @@
   	<meta property="og:url" content="http://www.codekraft.it/" />
   	<meta property="og:site_name" content="codekraft-studio, cutting edge programming!" />
     <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="../src/video-background.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="../dist/angular-video-background.min.css" media="screen" title="no title" charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
   <body ng-controller="mainCtrl">
 
-    <video-background class="bg-video" autoplay="false" key-controls="true" start-time="0.50" end-time="12.50"
-      on-firstplay="isStarted = true" on-firstend="isStarted = false; isEnded = true"
-      source="myVideo">
-    </video-background>
+    <div class="video-container">
 
-    <article role="main" class="center-block" ng-class="{'hide': isStarted}">
+      <video-background class="bg-video" autoplay="false" key-controls="true" autopause="true"
+        on-firstplay="isStarted = true" on-firstend="isStarted = false; isEnded = true"
+        source="myVideo">
+      </video-background>
+
+    </div>
+
+    <article role="main" class="center-block">
       <a href="https://github.com/codekraft-studio"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
       <header>
         <div class="hcont">
@@ -34,27 +39,27 @@
             You can show any video you want inside your page and have fun with keyboard controls!
             <br>Press <b>space</b> to start the video.
           </p>
-          <a ng-show="isEnded" ng-cloak href="https://github.com/codekraft-studio/angular-video-background/archive/master.zip" class="a-btn">Get it</a>
-          <a ng-show="isEnded" ng-cloak href="https://github.com/codekraft-studio/angular-video-background/blob/master/README.md" class="a-btn">Docs</a>
+          <a ng-cloak href="https://github.com/codekraft-studio/angular-video-background/archive/master.zip" class="btn">Get it</a>
+          <a ng-cloak href="https://github.com/codekraft-studio/angular-video-background/blob/master/README.md" class="btn">Docs</a>
         </div>
       </header>
     </article>
+
   </body>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
-  <script type="text/javascript" src="../src/video-background.module.js"></script>
+  <script type="text/javascript" src="../dist/angular-video-background.js"></script>
   <script>
+    // create basic module
     angular.module('app', ['video-background'])
-
     .controller('mainCtrl', function($scope) {
-
       $scope.myVideo = {
-        mp4: 'http://www.free-video-footage.com//static2/preview/stock-video-free-stock-video-002-83568.mp4'
+        mp4: 'https://ak8.picdn.net/shutterstock/videos/7726558/preview/stock-footage-floating-lanterns-in-yee-peng-festival-loy-krathong-celebration-in-chiangmai-thailand-uprisen-wid.mp4'
       }
+    });
 
-    })
-
+    // bootstrap example
     angular.element(document).ready(function() {
       angular.bootstrap(document, ['app'])
-    })
+    });
   </script>
 </html>
