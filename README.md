@@ -10,7 +10,11 @@ Download the package using npm package manager:
 ```bash
 npm install angular-video-background
 ```
-or clone it from github.
+with bower package manager:
+```bash
+bower install --save angular-videos-background
+```
+or download it directly from GitHub.
 
 Add the style to your header:
 ```html
