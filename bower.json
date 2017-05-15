@@ -1,0 +1,28 @@
+{
+  "name": "angular-video-background",
+  "description": "use any video as background for your html pages with many options",
+  "main": [
+    "./dist/angular-video-background.min.css",
+    "./dist/angular-video-background.js"
+  ],
+  "authors": [
+    "codekraft-studio"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "angularjs",
+    "video",
+    "video-player",
+    "video-background",
+    "html5",
+    "media-player"
+  ],
+  "homepage": "https://github.com/codekraft-studio/angular-video-background",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
