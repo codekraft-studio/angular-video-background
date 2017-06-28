@@ -1,6 +1,6 @@
 angular.module('video-background')
 
-.directive('videoBackground', function($log,$timeout,$document) {
+.directive('videoBackground', function($log, $timeout, $document) {
 
   function _link(scope, elem, attrs) {
 
@@ -44,9 +44,10 @@ angular.module('video-background')
 
     // add source elements to html5 video
     for( var key in scope.source ) {
-      // if property name is allowed
-      // create source element
+      
+      // if property name is allowed create source element
       if( scope.source.hasOwnProperty(key) && sourceTypes.indexOf(key) > -1 ) {
+        
         // create element
         var tmp = document.createElement('source');
         // add source and type
@@ -212,11 +213,15 @@ angular.module('video-background')
       * show the control box
       */
       $video.onseeking = function() {
-
-        // show controls box
-        scope.$apply(function() {
-          return controlBox.removeClass('ng-hide');
-        });
+        
+        if( attrs.showTime !== 'false' ) {
+          
+          // show controls box
+          scope.$apply(function() {
+            return controlBox.removeClass('ng-hide');
+          });
+          
+        }
 
       };
 
@@ -246,17 +251,26 @@ angular.module('video-background')
 
         // cancel privous timeout
         $timeout.cancel(controlBoxTimeout);
-        // show element for a while
-        controlBox.removeClass('ng-hide');
-
-        controlBoxTimeout = $timeout(function() {
-
-          // hide the control box
-          scope.$apply(function() {
-            controlBox.addClass('ng-hide');
-          });
-
-        }, 2000);
+        
+        if( attrs.showTime !== 'false' ) {
+          
+          // show element for a while
+          controlBox.removeClass('ng-hide');
+            
+          // TODO: Introduce the mode 'auto' and 'true' show-time true will always show time
+          // while auto will set the timeout like now
+          // 
+          // Set the timeout to hide the control box
+          controlBoxTimeout = $timeout(function() {
+            
+            // hide the control box
+            scope.$apply(function() {
+              controlBox.addClass('ng-hide');
+            });
+            
+          }, 2000);
+          
+        }
 
       };
 
