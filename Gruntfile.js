@@ -101,13 +101,26 @@ module.exports = function(grunt) {
       },
       source: {
         files: 'src/**/*.js',
-        tasks: ['newer:jshint', 'concat', 'ngAnnotate', 'uglify']
+        tasks: ['newer:jshint', 'concat', 'ngAnnotate', 'uglify'],
+        options: {
+          livereload: true,
+        }
       }
 
     },
+    
+    connect: {
+      server: {
+        options: {
+          port: 8000,
+          open: true,
+          hostname: 'localhost',
+          livereload: true
+        }
+      }
+    }
 
   });
-
 
   // JS Hint
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -120,14 +133,15 @@ module.exports = function(grunt) {
   // Styles
   grunt.loadNpmTasks('grunt-postcss');
 
-  // Watch for file changes
+  // Serve & Watch for file changes
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // AngularJs
   grunt.loadNpmTasks('grunt-ng-annotate');
 
   // Default task.
-  grunt.registerTask('default', ['watch']);
+  grunt.registerTask('default', ['connect', 'watch']);
 
   // Build task(s)
   grunt.registerTask('build', ['newer:jshint', 'concat', 'ngAnnotate', 'uglify', 'postcss']);
