@@ -3,7 +3,7 @@ light module for using any video as background with many options
 
 The idea came when I needed to use a video as background for one website and looking around on the web I saw: [Vide](https://github.com/VodkaBears/Vide) and it works very good, but uses jQuery and I didn't like the code too much so I decided to write my own.
 
-## [DEMO](http://www.codekraft.it/demos/angular-video-background/)
+### [DEMO](https://codekraft-studio.github.io/angular-video-background/)
 
 ## Getting started:
 Download the package using npm package manager:
@@ -55,6 +55,7 @@ __Note:__ you must pass a object to the attribute.
 * __source__: the object containing the video source/s
 * __autoplay__: set the video auto play attribute (default true)
 * __autopause__: autopause the video in case of seeking
+* __show-time__: enable or disable the current time view
 * __on-firstplay__: a callback to run when the video play for the first time
 * __on-firstend__: a callback to run when the video ends for the first time
 * __start-time__: specify a custom start time for the video (expressed in int/float es: 1.50)
