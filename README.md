@@ -1,7 +1,5 @@
 # angular-video-background
-light module for using any video as background with many options
-
-The idea came when I needed to use a video as background for one website and looking around on the web I saw: [Vide](https://github.com/VodkaBears/Vide) and it works very good, but uses jQuery and I didn't like the code too much so I decided to write my own.
+> light module for using any video as background with many options
 
 ### [DEMO](https://codekraft-studio.github.io/angular-video-background/)
 
