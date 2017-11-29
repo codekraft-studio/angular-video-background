@@ -1,7 +1,7 @@
 # angular-video-background
 > light module for using any video as background with many options
 
-### [DEMO](http://www.codekraft.it/demos/angular-video-background/)
+### [DEMO](https://codekraft-studio.github.io/angular-video-background/)
 
 ## Getting started:
 Download the module using npm package manager:
@@ -57,6 +57,7 @@ You can optionally bind keyboard press to video controls by using __key-controls
 * __volume__: an number value from 0 to 1 to set the initial volume
 * __autopause__: autopause the video in case of seeking
 * __key-controls__: if the attribute is specified will bind keyboard controls
+* __show-time__: enable or disable the current time view
 * __on-firstplay__: a callback to run when the video play for the first time
 * __on-firstend__: a callback to run when the video ends for the first time
 * __start-time__: specify a custom start time for the video (expressed in int/float es: 1.50)
