@@ -1,12 +1,10 @@
 # angular-video-background
-light module for using any video as background with many options
+> light module for using any video as background with many options
 
-The idea came when I needed to use a video as background for one website and looking around on the web I saw: [Vide](https://github.com/VodkaBears/Vide) and it works very good, but uses jQuery and I didn't like the code too much so I decided to write my own.
-
-## [DEMO](http://www.codekraft.it/demos/angular-video-background/)
+### [DEMO](http://www.codekraft.it/demos/angular-video-background/)
 
 ## Getting started:
-Download the package using npm package manager:
+Download the module using npm package manager:
 ```bash
 npm install angular-video-background
 ```
@@ -43,18 +41,22 @@ $scope.myVideo = {
   ogg: "public/myvideo.ogg"
 }
 ```
-__Note:__ you must pass a object to the attribute.
+__Note:__ you must pass a object to the __source__ attribute.
 ```html
 <video-background source="myVideo"></video-background>
 <video-background source="{ mp4: 'path/to/video.mp4' }"></video-background>
 ```
+
+You can optionally bind keyboard press to video controls by using __key-controls__ attribute.
 
 ---
 
 ## Directive attributes:
 * __source__: the object containing the video source/s
 * __autoplay__: set the video auto play attribute (default true)
+* __volume__: an number value from 0 to 1 to set the initial volume
 * __autopause__: autopause the video in case of seeking
+* __key-controls__: if the attribute is specified will bind keyboard controls
 * __on-firstplay__: a callback to run when the video play for the first time
 * __on-firstend__: a callback to run when the video ends for the first time
 * __start-time__: specify a custom start time for the video (expressed in int/float es: 1.50)
@@ -89,8 +91,20 @@ Specify a custom end time for the video, pass a number, can be a float.
 <video-background source="myVideo" end-time="15.35"></video-background>
 ```
 
+### initial volume
+Start the video with initial volume of 0
+```html
+<video-background source="myVideo" volume="0"></video-background>
+```
+
 ### autoplay & autopause
 Specify a custom end time for the video, pass a number, can be a float.
 ```html
-<video-background source="myVideo" key-controls="true" autoplay autopause></video-background>
+<video-background source="myVideo" autoplay autopause></video-background>
+```
+
+### enable keyboard controls
+Specify a custom end time for the video, pass a number, can be a float.
+```html
+<video-background source="myVideo" key-controls="true"></video-background>
 ```
