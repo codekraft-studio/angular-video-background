@@ -57,7 +57,10 @@ You can optionally bind keyboard press to video controls by using __key-controls
 * __volume__: an number value from 0 to 1 to set the initial volume
 * __autopause__: autopause the video in case of seeking
 * __key-controls__: if the attribute is specified will bind keyboard controls
-* __show-time__: enable or disable the current time view
+* __control-box__: enable the controlbox user interface (can be false, true, auto)
+* __on-play__: a callback to run when the video is played
+* __on-stop__: a callback to run when the video is stopped (or ended)
+* __on-pause__: a callback to run when the video is paused
 * __on-firstplay__: a callback to run when the video play for the first time
 * __on-firstend__: a callback to run when the video ends for the first time
 * __start-time__: specify a custom start time for the video (expressed in int/float es: 1.50)

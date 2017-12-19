@@ -20,7 +20,7 @@ angular.module('video-background')
     var controlBox = elem.children().eq(1);
 
     // get the video DOM element
-    var $video = videoEl[0];
+    var $video = videoEl[0], $parent = elem.parent()[0];
 
     // the video controls box
     var controlBoxTimeout;
@@ -62,11 +62,34 @@ angular.module('video-background')
 
     }
 
+    // Check if event needs to be propagated
+    // basically if the element that catch keypress satisfy some conditions
+    // if the element is not an input or some form component
+    // if the element is contained in the same parent of video element
+    // if is the video element itself
+    function isGoodEvent(e) {
+
+      if (e.target.nodeName === 'INPUT') {
+        return;
+      }
+
+      // if same element
+      if (e.target === elem[0]) {
+        return true;
+      }
+
+      // if parent or contained in same parent
+      if ($parent === e.target || $parent.contains(e.target)) {
+        return true;
+      }
+
+    }
+
     // key bindings
     function onKeyUp(e) {
 
       // if esc key stop and reset the video
-      if( e.which === 27 ) {
+      if( e.which === 27 && isGoodEvent(e) ) {
         $video.pause();
         $video.currentTime = 0;
         scope.onStop();
@@ -83,12 +106,12 @@ angular.module('video-background')
       }
 
       // if key up increase volume
-      if( e.which === 38 ) {
+      if( e.which === 38 && isGoodEvent(e) ) {
         $video.volume = (($video.volume + 0.1) < 1) ? ($video.volume + 0.1) : 1;
       }
 
       // if key down decrease volume
-      if( e.which === 40 ) {
+      if( e.which === 40 && isGoodEvent(e) ) {
         $video.volume = (($video.volume - 0.1) > 0) ? ($video.volume - 0.1) : 0;
       }
 
@@ -97,16 +120,16 @@ angular.module('video-background')
     function keySeek(e) {
 
       // left arrow key
-      if( e.which === 37 ) {
+      if (e.which === 37 && isGoodEvent(e)) {
         e.preventDefault();
 
         // Auto pause the video
-        if( !$video.paused && $video.autopause ) {
+        if ((!$video.paused && $video.autopause) && isGoodEvent(e)) {
           $video.pause();
         }
 
         // if is not at the very start
-        if($video.currentTime > 0 && $video.currentTime >= 2 ) {
+        if (($video.currentTime > 0 && $video.currentTime >= 2) && isGoodEvent(e)) {
           $video.currentTime -= 2;
         } else {
           $video.currentTime = 0;
@@ -115,7 +138,7 @@ angular.module('video-background')
       }
 
       // ight arrow key
-      if( e.which === 39 ) {
+      if( e.which === 39 && isGoodEvent(e) ) {
         e.preventDefault();
 
         // Auto pause the video
