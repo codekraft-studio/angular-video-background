@@ -1,48 +1,48 @@
 html, body {
-    width: 100%;
-    min-height: 100%;
-    position: relative;
-    margin: 0;
-    height: 100%;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-    color: #555;
+  width: 100%;
+  min-height: 100%;
+  position: relative;
+  margin: 0;
+  height: 100%;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #555;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, summary {
-    display: block;
+  display: block;
 }
 
 h1 {
-    font-weight: 700;
-    font-size: 4em;
+  font-weight: 700;
+  font-size: 4em;
 }
 
 h2 {
-    font-weight: 800;
-    font-size: 1.8em;
-    font-family: 'rs';
+  font-weight: 800;
+  font-size: 1.8em;
+  font-family: 'rs';
 }
 
 h3 {
-    color: #555;
-    font-weight: 700;
-    font-size: 2em;
-    margin: 64px 0 16px;
-    font-family: 'rs';
+  color: #555;
+  font-weight: 700;
+  font-size: 2em;
+  margin: 64px 0 16px;
+  font-family: 'rs';
 }
 
 h4 {
-    color: #337ab7;
-    font-weight: 700;
-    font-size: 1.6em;
-    margin: 24px 0 16px;
+  color: #337ab7;
+  font-weight: 700;
+  font-size: 1.6em;
+  margin: 24px 0 16px;
 }
 
 p {
-    font-weight: 400;
-    font-size: 1.4em;
-    margin: 0.5em 0;
+  font-weight: 400;
+  font-size: 1.4em;
+  margin: 0.5em 0;
 }
 
 .buttons {
@@ -54,63 +54,63 @@ p {
 }
 
 p b {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 
 a {
-    background-color: transparent;
-    color: inherit;
+  background-color: transparent;
+  color: inherit;
 }
 
 a:active, a:hover {
-    outline: 0;
+  outline: 0;
 }
 
 div {
-    background-position: center;
-    background-repeat: no-repeat;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 img {
-    border: 0;
+  border: 0;
 }
 
 td, th {
-    padding: 0;
+  padding: 0;
 }
 
 .hcont {
-    width: 1120px;
-    margin: 0 auto;
-    height: 100%;
-    position: relative;
+  width: 1120px;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
 }
 
 article header {
-    margin: 0;
-    padding: 40px 0;
-    width: 100%;
-    border-top: 3px solid #337ab7;
+  margin: 0;
+  padding: 40px 0;
+  width: 100%;
+  border-top: 3px solid #337ab7;
 }
 
 article header h1, article header h2 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 article section {
-    margin: 16px 0 64px;
+  margin: 16px 0 64px;
 }
 
 article footer .hcont .col {
-    height: 100%;
-    -webkit-column-break-inside: avoid-column;
-    page-break-inside: avoid-column;
-    break-inside: avoid-column;
+  height: 100%;
+  -webkit-column-break-inside: avoid-column;
+  page-break-inside: avoid-column;
+  break-inside: avoid-column;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-    display: none !important;
+  display: none !important;
 }
 
 article {
@@ -121,50 +121,57 @@ article {
   color: #35464e;
   text-align: center;
   background-color: #eee;
+  position: absolute;
+  bottom: 0;
+  border-top: 2px solid black;
+}
+
+article.active {
+  height: 40%;
 }
 
 article header {
-    height: auto;
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    padding: 0;
-    margin: 20px 0;
-    border: 0;
+  height: auto;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  padding: 0;
+  margin: 20px 0;
+  border: 0;
 }
 
 article header p {
-    font-size: 1em;
-    font-weight: 400;
-    letter-spacing: 0.3px;
-    text-shadow: 0px 0px 60px rgba(0, 0, 0, 0.2);
+  font-size: 1em;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  text-shadow: 0px 0px 60px rgba(0, 0, 0, 0.2);
 }
 
 a.btn {
-    display: inline-block;
-    text-transform: uppercase;
-    margin: 0 1rem 1rem;
-    color: rgb(53, 70, 78);
-    background-color: rgba(53, 70, 78, 0.1);
-    border-color: rgb(53, 70, 78);
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 0.3rem;
-    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
-    padding: 0.75rem 1rem;
-    text-decoration: none;
-    min-width: 80px;
+  display: inline-block;
+  text-transform: uppercase;
+  margin: 0 1rem 1rem;
+  color: rgb(53, 70, 78);
+  background-color: rgba(53, 70, 78, 0.1);
+  border-color: rgb(53, 70, 78);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  min-width: 80px;
 }
 
 .btn:hover {
-    color: #ffffff;
-    text-decoration: none;
-    background-color: rgb(53, 70, 78);
-    border-color: #ffffff;
+  color: #ffffff;
+  text-decoration: none;
+  background-color: rgb(53, 70, 78);
+  border-color: #ffffff;
 }
 
 .hide {
-    background: transparent;
+  background: transparent;
 }
 
 .video-container {
