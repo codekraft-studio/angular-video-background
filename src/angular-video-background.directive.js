@@ -69,6 +69,7 @@ angular.module('video-background')
       if( e.which === 27 ) {
         $video.pause();
         $video.currentTime = 0;
+        scope.onStop();
       }
 
       // if space bar and video is not ended
@@ -133,16 +134,12 @@ angular.module('video-background')
 
     }
 
-    /**
-     * On first end run callback if specified
-     */
     $video.onended = function() {
 
+      // If still first end not occurred and the video is over
       if( $video.firstEnd ) {
-        // Turn off the flag
         $video.firstEnd = false;
-        // run the callback if specified
-        return angular.isFunction(scope.onFirstend) ? scope.$apply(scope.onFirstend()) : true;
+        scope.onFirstend();
       }
 
     };
@@ -179,7 +176,7 @@ angular.module('video-background')
       // if autoplay is set and is not false
       if( typeof attrs.autoplay !== 'undefined' && attrs.autoplay !== "false" ) {
         // start the video
-        return $video.play();
+        $video.play();
       }
 
     };
@@ -191,7 +188,7 @@ angular.module('video-background')
 
       if( attrs.endTime && attrs.endTime <= $video.currentTime ) {
         scope.currentTime = attrs.endTime;
-        return $video.currentTime = $video.duration;
+        $video.currentTime = $video.duration;
       }
 
       scope.$apply(function() {
@@ -201,95 +198,99 @@ angular.module('video-background')
     };
 
     /**
-     * Catch the first play
+     * Redirect video play event to user
+     * also catch and fire the first play as custom event
      */
     $video.onplay = function() {
-
       if( $video.firstPlay ) {
-        // set flag
         $video.firstPlay = false;
-        // run the callback if specified
-        return angular.isFunction(scope.onFirstplay) ? scope.$apply(scope.onFirstplay()) : true;
+        scope.onFirstplay();
+      }
+      scope.onPlay();
+    };
+
+
+    /**
+     * Show the controlbox on seeking
+     */
+    $video.onseeking = function() {
+
+      if (typeof attrs.controlBox === 'undefined' || attrs.controlBox === 'false') {
+        return;
+      }
+
+      // show controls box
+      scope.$apply(function() {
+        controlBox.removeClass('ng-hide');
+      });
+
+    };
+
+    /**
+     * When seeking is finished if the control-box attribute is set and is not false
+     * show the control box and in auto mode automatically hide it after a while
+     */
+    $video.onseeked = function() {
+
+      if (typeof attrs.controlBox === 'undefined' || attrs.controlBox === 'false') {
+        return;
+      }
+
+      // cancel privous timeout
+      $timeout.cancel(controlBoxTimeout);
+
+      // On auto mode hide the control box after a while
+      if( attrs.controlBox === 'auto' ) {
+
+        // Set the timeout to hide the control box
+        controlBoxTimeout = $timeout(function() {
+          scope.$apply(function() {
+            controlBox.addClass('ng-hide');
+          });
+        }, 2000);
+
       }
 
     };
 
-    // by default show the control box
-    // if not specified
-    if( attrs.controlBox !== 'false' ) {
+    /**
+    * Show the video controls box
+    */
+    $video.onpause = function() {
 
-      /**
-      * When the user start seeking
-      * show the control box
-      */
-      $video.onseeking = function() {
-
-        if( attrs.showTime !== 'false' ) {
-
-          // show controls box
-          scope.$apply(function() {
-            return controlBox.removeClass('ng-hide');
-          });
-
-        }
-
-      };
-
-      /**
-      * When the seek is finished
-      * hide again the control box
-      */
-      $video.onseeked = function() {
-
-        // cancel privous timeout
-        $timeout.cancel(controlBoxTimeout);
-        // hide the control box
-        controlBoxTimeout = $timeout(function() {
-
-          scope.$apply(function() {
-            controlBox.addClass('ng-hide');
-          });
-
-        }, 2000);
-
-      };
-
-      /**
-      * Show the video controls box
-      */
-      $video.onpause = function() {
+      // If controlbox is defined and not falsy show the box on pause
+      if( typeof attrs.controlBox !== 'undefined' && attrs.controlBox !== 'false' ) {
 
         // cancel privous timeout
         $timeout.cancel(controlBoxTimeout);
 
-        if( attrs.showTime !== 'false' ) {
+        // Show the control box
+        controlBox.removeClass('ng-hide');
 
-          // show element for a while
-          controlBox.removeClass('ng-hide');
+        // When on auto-mode wait few seconds and hide it again
+        if( attrs.controlBox === 'auto' ) {
 
-          // TODO: Introduce the mode 'auto' and 'true' show-time true will always show time
-          // while auto will set the timeout like now
-          //
           // Set the timeout to hide the control box
           controlBoxTimeout = $timeout(function() {
-
-            // hide the control box
             scope.$apply(function() {
               controlBox.addClass('ng-hide');
             });
-
           }, 2000);
 
         }
 
-      };
+      }
 
-    }
+      scope.onPause();
+    };
 
   }
 
   var _scope = {
     source: '=',
+    onPlay: '&',
+    onPause: '&',
+    onStop: '&',
     onFirstplay: '&',
     onFirstend: '&'
   };

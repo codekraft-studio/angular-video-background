@@ -1,26 +1,26 @@
 video-background {
-  overflow: hidden
-}
-
-.video-background, video-background {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0
+  bottom: 0;
+  outline: none;
+  overflow: hidden;
+  z-index: -1000;
 }
 
-.video-background {
+video-background .video-background {
   min-width: 100%;
   min-height: 100%;
   width: auto;
   height: auto;
-  z-index: -100;
+  z-index: -1;
   background-size: cover;
-  transition: opacity 1s
+  transition: opacity 1s;
+  outline: none;
 }
 
-.video-controls {
+video-background .video-controls {
   position: absolute;
   width: 50%;
   display: block;
@@ -29,14 +29,15 @@ video-background {
   right: 0;
   margin: 0 auto;
   left: 0;
+  z-index: 1;
   text-align: center;
   padding-bottom: 20px;
-  transition: 15ms
+  transition: 15ms;
 }
 
-.video-controls span {
+video-background .video-controls span {
   font-size: 2.8em;
   color: #f5f5f5;
   font-family: sans-serif;
-  font-weight: 600
+  font-weight: 600;
 }
